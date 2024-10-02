@@ -17,19 +17,30 @@ import SubscriptionPlans from './components/Subscription/SubscriptionPlans';
 
 // Componente para rutas protegidas
 const PrivateRoute = ({ children }) => {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
+  if (loading) {
+    return <div>Cargando...</div>; // O un componente de carga más elaborado
+  }
   return user ? children : <Navigate to="/login" />;
 };
 
-// Componente para rutas de admin
 const AdminRoute = ({ children }) => {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
+  if (loading) {
+    return <div>Cargando...</div>;
+  }
   return user && user.is_staff ? children : <Navigate to="/dashboard" />;
 };
-
 const App = () => {
+  const { loading } = useAuth();
+
+  if (loading) {
+    return <div>Cargando aplicación...</div>; // O un componente de carga más elaborado
+  }
+
   return (
-    <AuthProvider>
+    <Router>
+      <div className="min-h-screen bg-gray-100">
       <Router>
         <div className="min-h-screen bg-gray-100">
           <Routes>
@@ -57,7 +68,8 @@ const App = () => {
           </Routes>
         </div>
       </Router>
-    </AuthProvider>
+      </div>
+    </Router>
   );
 };
 
