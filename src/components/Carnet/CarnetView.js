@@ -4,34 +4,37 @@ import { useAuth } from '../../contexts/AuthContext'; // Asumiendo que tienes un
 
 const CarnetView = () => {
   const [carnetData, setCarnetData] = useState(null);
-  const { user } = useAuth(); // Obtén el usuario actual del contexto de autenticación
+  const { user, token } = useAuth(); // Obtén el token del contexto de autenticación
 
   useEffect(() => {
     // Función para obtener los datos del carnet
     const fetchCarnetData = async () => {
       try {
-        // Aquí deberías hacer una llamada a tu API para obtener los datos del carnet
-        // Por ejemplo:
-        // const response = await fetch(`/api/carnet/${user.id}`);
-        // const data = await response.json();
-        // setCarnetData(data);
+        const response = await fetch(
+          `${process.env.REACT_APP_API_URL}/api/carnets/${user.id}/`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`, // Enviar el token en los headers
+              'Content-Type': 'application/json',
+            },
+          }
+        );
+        
+        if (!response.ok) {
+          throw new Error('Error al obtener los datos del carnet');
+        }
 
-        // Por ahora, usaremos datos de ejemplo
-        setCarnetData(JSON.stringify({
-          id: '12345',
-          name: user.name,
-          role: 'Estudiante',
-          expirationDate: '2025-12-31'
-        }));
+        const data = await response.json();
+        setCarnetData(data);
       } catch (error) {
         console.error('Error al obtener los datos del carnet:', error);
       }
     };
 
-    if (user) {
+    if (user && token) {
       fetchCarnetData();
     }
-  }, [user]);
+  }, [user, token]);
 
   if (!carnetData) {
     return <div>Cargando datos del carnet...</div>;
@@ -41,12 +44,12 @@ const CarnetView = () => {
     <div className="carnet-view">
       <h2>Tu Carnet Digital</h2>
       <div className="carnet-details">
-        <p>Nombre: {JSON.parse(carnetData).name}</p>
-        <p>Rol: {JSON.parse(carnetData).role}</p>
-        <p>Fecha de expiración: {JSON.parse(carnetData).expirationDate}</p>
+        <p>Nombre: {carnetData.name}</p>
+        <p>Rol: {carnetData.role}</p>
+        <p>Fecha de expiración: {carnetData.expirationDate}</p>
       </div>
       <div className="qr-code">
-        <QRCodeSVG value={carnetData} size={256} />
+        <QRCodeSVG value={JSON.stringify(carnetData)} size={256} />
       </div>
     </div>
   );
