@@ -31,16 +31,10 @@ const AdminRoute = ({ children }) => {
   }
   return user && user.is_staff ? children : <Navigate to="/dashboard" />;
 };
+
 const App = () => {
-  const { loading } = useAuth();
-
-  if (loading) {
-    return <div>Cargando aplicación...</div>; // O un componente de carga más elaborado
-  }
-
   return (
-    <Router>
-      <div className="min-h-screen bg-gray-100">
+    <AuthProvider>
       <Router>
         <div className="min-h-screen bg-gray-100">
           <Routes>
@@ -68,8 +62,7 @@ const App = () => {
           </Routes>
         </div>
       </Router>
-      </div>
-    </Router>
+    </AuthProvider>
   );
 };
 
