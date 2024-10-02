@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -26,7 +26,7 @@ const Login = () => {
           <img
             className="mx-auto h-12 w-auto"
             src="/logoAsobares.png"
-            alt="Your Company Logo"
+            alt="Asobares Logo"
           />
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
             Iniciar sesión
@@ -80,6 +80,26 @@ const Login = () => {
             </button>
           </div>
         </form>
+
+        <div className="text-center text-sm">
+          <p className="mt-2">
+            Al continuar, aceptas nuestras{' '}
+            <Link to="/privacy-policy" className="font-medium text-[#CF413D] hover:text-[#B93936]">
+              políticas de privacidad
+            </Link>{' '}
+            y los{' '}
+            <Link to="/terms-and-conditions" className="font-medium text-[#CF413D] hover:text-[#B93936]">
+              términos y condiciones
+            </Link>
+            .
+          </p>
+          <p className="mt-2">
+            ¿No tienes una cuenta?{' '}
+            <Link to="/register" className="font-medium text-[#CF413D] hover:text-[#B93936]">
+              Regístrate
+            </Link>
+          </p>
+        </div>
       </div>
     </div>
   );

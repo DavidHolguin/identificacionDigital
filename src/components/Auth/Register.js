@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -40,7 +40,6 @@ const Register = () => {
         console.error('Código de estado:', err.response.status);
         console.error('Headers:', err.response.headers);
         
-        // Manejar errores específicos del servidor
         if (err.response.data) {
           const errorMessages = Object.values(err.response.data).flat().join(', ');
           setError(`Error al registrar: ${errorMessages}`);
@@ -60,10 +59,18 @@ const Register = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
-        <div>
+        <div className="text-center">
+          <img
+            className="mx-auto h-24 w-auto"
+            src="/logoAsobares.png"
+            alt="Asobares Logo"
+          />
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
             Crear una cuenta
           </h2>
+          <p className="mt-2 text-center text-sm text-gray-600">
+            Registro de Asociados
+          </p>
         </div>
         
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
@@ -74,7 +81,7 @@ const Register = () => {
                 name="username"
                 type="text"
                 required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-[#CF413D] focus:border-[#CF413D] focus:z-10 sm:text-sm"
                 placeholder="Nombre de usuario"
                 value={formData.username}
                 onChange={handleChange}
@@ -86,7 +93,7 @@ const Register = () => {
                 name="email"
                 type="email"
                 required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-[#CF413D] focus:border-[#CF413D] focus:z-10 sm:text-sm"
                 placeholder="Correo electrónico"
                 value={formData.email}
                 onChange={handleChange}
@@ -98,7 +105,7 @@ const Register = () => {
                 name="first_name"
                 type="text"
                 required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-[#CF413D] focus:border-[#CF413D] focus:z-10 sm:text-sm"
                 placeholder="Nombre"
                 value={formData.first_name}
                 onChange={handleChange}
@@ -110,7 +117,7 @@ const Register = () => {
                 name="last_name"
                 type="text"
                 required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-[#CF413D] focus:border-[#CF413D] focus:z-10 sm:text-sm"
                 placeholder="Apellido"
                 value={formData.last_name}
                 onChange={handleChange}
@@ -122,7 +129,7 @@ const Register = () => {
                 name="password"
                 type="password"
                 required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-[#CF413D] focus:border-[#CF413D] focus:z-10 sm:text-sm"
                 placeholder="Contraseña"
                 value={formData.password}
                 onChange={handleChange}
@@ -134,7 +141,7 @@ const Register = () => {
                 name="password2"
                 type="password"
                 required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-[#CF413D] focus:border-[#CF413D] focus:z-10 sm:text-sm"
                 placeholder="Confirmar contraseña"
                 value={formData.password2}
                 onChange={handleChange}
@@ -143,18 +150,38 @@ const Register = () => {
           </div>
 
           {error && (
-            <div className="text-red-500 text-sm mt-2">{error}</div>
+            <div className="text-[#CF413D] text-sm mt-2">{error}</div>
           )}
 
           <div>
             <button
               type="submit"
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[#CF413D] hover:bg-[#B93936] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#CF413D]"
             >
               Registrarse
             </button>
           </div>
         </form>
+
+        <div className="text-center text-sm">
+          <p className="mt-2">
+            Al continuar, aceptas nuestras{' '}
+            <Link to="/privacy-policy" className="font-medium text-[#CF413D] hover:text-[#B93936]">
+              políticas de privacidad
+            </Link>{' '}
+            y los{' '}
+            <Link to="/terms-and-conditions" className="font-medium text-[#CF413D] hover:text-[#B93936]">
+              términos y condiciones
+            </Link>
+            .
+          </p>
+          <p className="mt-2">
+            ¿Ya tienes una cuenta?{' '}
+            <Link to="/login" className="font-medium text-[#CF413D] hover:text-[#B93936]">
+              Inicia sesión
+            </Link>
+          </p>
+        </div>
       </div>
     </div>
   );
